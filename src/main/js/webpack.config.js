@@ -6,10 +6,8 @@ module.exports = {
   target: "web",
   mode: "development",
   output: {
-    path: path.resolve(__dirname, "build"),
-//    filename: "bundle.js",
-    filename: '../resources/static/built/bundle.js'
-
+    path: path.resolve(__dirname, "..", "resources", "static",),
+    filename: "bundle.js",
   },
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
@@ -29,6 +27,10 @@ module.exports = {
         test: /\.css$/,
         loader: "css-loader",
       },
+      {
+       test: /\.(png|svg|jpg|gif)$/,
+       use: 'file-loader',
+     },
     ],
   },
   plugins: [
