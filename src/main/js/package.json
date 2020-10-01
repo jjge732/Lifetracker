@@ -10,14 +10,18 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "axios": "^0.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
+    "redux": "^4.0.5",
     "typescript": "^4.0.3"
   },
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack",
+    "build": "webpack --env.BASE_URL=localhost:8080",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch": "webpack --watch -d --output ./target/classes/static/built/bundle.js"
@@ -38,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^4.3.0",
     "file-loader": "^6.1.0",
