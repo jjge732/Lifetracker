@@ -2,6 +2,5 @@ package com.jjgeastwood.lifetracker.models;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Long> {
-
+public interface JournalEntryRepository extends PagingAndSortingRepository<JournalEntry, Long> {
 }
