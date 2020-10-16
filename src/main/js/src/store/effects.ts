@@ -1,9 +1,7 @@
-import { ThunkAction } from 'redux-thunk';
-import { ApplicationState, ApplicationAction } from './types';
 import { loadUsersRequest, loadUsersSuccess, loadUsersError } from './actions';
+import { Dispatch } from 'react';
 import userService from '../services/userService';
-
-type Effect = ThunkAction<any, ApplicationState, any, ApplicationAction>;
+import { Effect } from './types'
 
 export const loadUsers = (): Effect => (dispatch, getState) => {
   dispatch(loadUsersRequest());

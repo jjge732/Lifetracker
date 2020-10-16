@@ -6,8 +6,12 @@ export const initialState: ApplicationState = {
     users: false,
   },
   users: [{
-    email: "test@ymail.com"
+    email: "test@ymail.com",
   }],
+  form: {
+    email: "",
+    password: ""
+  }
 }
 
 const reducer = (state = initialState, action: ApplicationAction) => {

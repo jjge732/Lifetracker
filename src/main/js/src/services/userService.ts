@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '../utils/config';
+import { User } from '../store/types'
 
 class UserService {
   axios: any
@@ -8,7 +9,7 @@ class UserService {
       baseURL: `${BASE_URL}/api`
     })
   }
-  loadUsers = (): Promise<Array<any>> => axios.get('/api/users');
+  loadUsers = (): Promise<Array<User>> => axios.get('/api/users');
 }
 const userService = new UserService()
 
