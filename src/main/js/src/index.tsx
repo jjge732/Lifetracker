@@ -7,7 +7,7 @@ import reducer, { initialState } from './store/reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import './index.css';
-import { App } from './components/Container';
+import { App } from './components/App';
 
 const composeEnhancers = composeWithDevTools({});
 const store = createStore(reducer, initialState, composeEnhancers(applyMiddleware(thunk)));

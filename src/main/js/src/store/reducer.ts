@@ -11,7 +11,8 @@ export const initialState: ApplicationState = {
   form: {
     email: "",
     password: ""
-  }
+  },
+  activeUserId: null
 }
 
 const reducer = (state = initialState, action: ApplicationAction) => {
@@ -29,6 +30,11 @@ const reducer = (state = initialState, action: ApplicationAction) => {
       return produce(state, draft => {
         draft.loading.users = false;
       });
+    case "updateForm":
+      return produce(state, draft => {
+        draft.form.email = action.email;
+        draft.form.password = action.password;
+      })
     default:
       return state;
   }

@@ -15,7 +15,8 @@ export interface ApplicationState {
   form: {
     email: string,
     password: string
-  }
+  },
+  activeUserId: number | null
 }
 
 export interface LoadUsersRequest extends Action {
@@ -31,9 +32,32 @@ export interface LoadUsersError extends Action {
   type: 'loadUsersError';
 }
 
+export interface LoginUserRequest extends Action {
+  type: 'loginUserRequest';
+}
+
+export interface LoginUserSuccess extends Action {
+  type: 'loginUserSuccess';
+  activeUserId: number;
+}
+
+export interface LoginUserError extends Action {
+  type: 'loginUserError';
+}
+
+export interface UpdateForm extends Action {
+  type: 'updateForm';
+  email: string;
+  password: string;
+}
+
 export type Effect = ThunkAction<any, ApplicationState, any, ApplicationAction>;
 
 export type ApplicationAction =
   | LoadUsersRequest
   | LoadUsersSuccess
-  | LoadUsersError;
+  | LoadUsersError
+  | LoginUserRequest
+  | LoginUserSuccess
+  | LoginUserError
+  | UpdateForm;

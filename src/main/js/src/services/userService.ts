@@ -10,6 +10,10 @@ class UserService {
     })
   }
   loadUsers = (): Promise<Array<User>> => axios.get('/api/users');
+  loginUser = (email: string, password: string): Promise<number> => axios.post('/signin', {
+    email,
+    password
+  })
 }
 const userService = new UserService()
 
