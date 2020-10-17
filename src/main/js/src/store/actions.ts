@@ -1,4 +1,4 @@
-import { User, LoadUsersRequest, LoadUsersSuccess, LoadUsersError, LoginUserRequest, LoginUserSuccess, LoginUserError, UpdateForm } from './types';
+import { User, LoadUsersRequest, LoadUsersSuccess, LoadUsersError, LoginUserRequest, LoginUserSuccess, LoginUserError, UpdateForm, JournalEntry } from './types';
 
 export const loadUsersRequest = (): LoadUsersRequest => ({
   type: 'loadUsersRequest',
@@ -17,9 +17,9 @@ export const loginUserRequest = (): LoginUserRequest => ({
   type: 'loginUserRequest',
 });
 
-export const loginUserSuccess = (activeUserId: number): LoginUserSuccess => ({
+export const loginUserSuccess = (journalEntry: JournalEntry): LoginUserSuccess => ({
   type: 'loginUserSuccess',
-  activeUserId,
+  journalEntry
 });
 
 export const loginUserError = (): LoginUserError => ({

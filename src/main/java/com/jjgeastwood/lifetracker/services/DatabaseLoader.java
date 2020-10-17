@@ -1,8 +1,16 @@
-package com.jjgeastwood.lifetracker.models;
+package com.jjgeastwood.lifetracker.services;
 
+import com.jjgeastwood.lifetracker.dao.FoodRepository;
+import com.jjgeastwood.lifetracker.dao.JournalEntryRepository;
+import com.jjgeastwood.lifetracker.dao.MealRepository;
+import com.jjgeastwood.lifetracker.dao.UserRepository;
+import com.jjgeastwood.lifetracker.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 public class DatabaseLoader implements CommandLineRunner {
@@ -11,6 +19,7 @@ public class DatabaseLoader implements CommandLineRunner {
     private final JournalEntryRepository journalEntryRepository;
     private final MealRepository mealRepository;
     private final FoodRepository foodRepository;
+    private final SimpleDateFormat sdf;
 
     @Autowired
     public DatabaseLoader(
@@ -23,19 +32,18 @@ public class DatabaseLoader implements CommandLineRunner {
         this.journalEntryRepository = journalEntryRepository;
         this.mealRepository = mealRepository;
         this.foodRepository = foodRepository;
+        this.sdf = new SimpleDateFormat("dd/M/yyyy");
     }
 
     @Override
     public void run(String... strings) throws Exception {
         User user = new User("test@gmail.com", "password");
-        JournalEntry journalEntry = new JournalEntry(user);
+        JournalEntry journalEntry = new JournalEntry(user, sdf.format(new Date()));
         Meal meal = new Meal(journalEntry, "Breakfast");
         Food food = new Food(meal,"Yogurt",5,5,5);
         this.userRepository.save(user);
         this.journalEntryRepository.save(journalEntry);
         this.mealRepository.save(meal);
         this.foodRepository.save(food);
-//        meal.getFoods().add(food);
-//        this.mealRepository.save(meal);
     }
 }

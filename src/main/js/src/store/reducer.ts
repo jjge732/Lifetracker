@@ -12,7 +12,7 @@ export const initialState: ApplicationState = {
     email: "",
     password: ""
   },
-  activeUserId: null
+  journalEntry: null
 }
 
 const reducer = (state = initialState, action: ApplicationAction) => {
@@ -35,6 +35,19 @@ const reducer = (state = initialState, action: ApplicationAction) => {
         draft.form.email = action.email;
         draft.form.password = action.password;
       })
+    case "loginUserRequest":
+      return produce(state, draft => {
+        draft.loading.users = true;
+      });
+    case "loginUserSuccess":
+      return produce(state, draft => {
+        draft.loading.users = false;
+        draft.journalEntry = action.journalEntry;
+      });
+    case "loginUserError":
+      return produce(state, draft => {
+        draft.loading.users = false;
+      });
     default:
       return state;
   }

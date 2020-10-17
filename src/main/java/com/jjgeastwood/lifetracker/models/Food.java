@@ -25,11 +25,11 @@ public class Food {
 
     private Date updatedAt;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "meals_foods",
-            joinColumns = { @JoinColumn(name = "meal_id") },
-            inverseJoinColumns = { @JoinColumn(name = "food_id") }
+        name = "meals_foods",
+        joinColumns = { @JoinColumn(name = "meal_id") }
     )
     private Set<Meal> meals;
 

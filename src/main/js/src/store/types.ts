@@ -5,6 +5,23 @@ export interface User {
   email: string;
 }
 
+export interface JournalEntry {
+  entryDate: string
+  meals: Array<Meal>;
+}
+
+export interface Meal {
+  name: string;
+  foods: Array<Food>;
+}
+
+export interface Food {
+  name: string;
+  carbs: number;
+  fats: number;
+  protein: number;
+}
+
 export interface LoadingState {
   users: boolean;
 }
@@ -16,7 +33,7 @@ export interface ApplicationState {
     email: string,
     password: string
   },
-  activeUserId: number | null
+  journalEntry: JournalEntry | null
 }
 
 export interface LoadUsersRequest extends Action {
@@ -38,7 +55,7 @@ export interface LoginUserRequest extends Action {
 
 export interface LoginUserSuccess extends Action {
   type: 'loginUserSuccess';
-  activeUserId: number;
+  journalEntry: JournalEntry;
 }
 
 export interface LoginUserError extends Action {

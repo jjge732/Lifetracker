@@ -3,6 +3,7 @@ package com.jjgeastwood.lifetracker.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,30 +15,29 @@ import static javax.persistence.CascadeType.REMOVE;
 @Table(name="journal_entries")
 public class JournalEntry {
 
-    private @Id
-    @GeneratedValue
-    Long id;
+    private @Id @Column(name="entry_date")
+    String entryDate;
 
     @OneToMany(cascade=REMOVE, mappedBy = "journalEntry")
     private List<Meal> meals;
-
     private Date createdAt;
-
     private Date updatedAt;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
     private @Version
     @JsonIgnore
-    Long version;
+    Date version;
 
     private JournalEntry() {}
 
-    public JournalEntry(User user) {
+    public JournalEntry(User user, String entryDate) {
         this.user = user;
         this.meals = new ArrayList<>();
+        this.entryDate = entryDate;
         this.createdAt = this.updatedAt = new Date();
     }
 
@@ -46,21 +46,21 @@ public class JournalEntry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JournalEntry JournalEntry = (JournalEntry) o;
-        return Objects.equals(id, JournalEntry.id) &&
+        return Objects.equals(entryDate, JournalEntry.entryDate) &&
                 Objects.equals(meals, JournalEntry.meals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, meals);
+        return Objects.hash(entryDate, meals);
     }
 
-    public Long getId() {
-        return id;
+    public String getEntryDate() {
+        return entryDate;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
     }
 
     public Date getCreatedAt() {
@@ -87,7 +87,6 @@ public class JournalEntry {
         this.meals = meals;
     }
 
-
     public User getUser() {
         return user;
     }
@@ -96,18 +95,18 @@ public class JournalEntry {
         this.user = user;
     }
 
-    public Long getVersion() {
+    public Date getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(Date version) {
         this.version = version;
     }
 
     @Override
     public String toString() {
         return "JournalEntry{" +
-                "id=" + id +
+                "entryDate=" + entryDate +
                 ", meals='" + meals + '\'' +
                 ", created_on='" + createdAt + '\'' +
                 ", last_updated='" + updatedAt + '\'' +

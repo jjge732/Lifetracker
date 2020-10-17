@@ -1,15 +1,20 @@
 package com.jjgeastwood.lifetracker.models;
 
 public class AuthenticatedUserResponse {
-    private int activeUserId;
+    private long activeUserId;
 
-    public AuthenticatedUserResponse() {}
+    private AuthenticatedUserResponse() {}
 
-    public int getActiveUserId() {
+    public AuthenticatedUserResponse(long activeUserId) {
+        this.activeUserId = activeUserId;
+    }
+
+
+    public long getActiveUserId() {
         return activeUserId;
     }
 
-    public void setActiveUserId(int activeUserId) {
+    public void setActiveUserId(long activeUserId) {
         this.activeUserId = activeUserId;
     }
 }

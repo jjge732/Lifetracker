@@ -1,23 +1,25 @@
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { loadUsers, loginUser } from '../store/effects';
-import { ApplicationState, User } from '../store/types'
+import { ApplicationState, Meal as MealType } from '../store/types'
 import { Login } from './Login';
+import { Meal } from './Meal';
 
 export const App: React.FC = () => {
-  const { users, form, activeUserId } = useSelector((state: ApplicationState) => state);
+
+  const { journalEntry } = useSelector((state: ApplicationState) => state);
   const dispatch = useDispatch();
 
   const handleClick = (event: any) => {
-    dispatch(loadUsers())
+
   }
 
-  return activeUserId === null ? <Login /> : (
+  return journalEntry === null ? <Login /> : (
     <main className="App">
-      {users.map((user: User) => <span key={user.email}>{user.email}</span>)}
-      <button onClick={handleClick}>Load Users</button>
+      <div>{journalEntry.entryDate}</div>
+      {
+        journalEntry.meals.map((meal: MealType) => <Meal key={meal.name} meal={meal}/>)
+      }
     </main>
   );
 }
