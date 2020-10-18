@@ -31,7 +31,9 @@ export interface ApplicationState {
   users: User[];
   form: {
     email: string,
-    password: string
+    password: string,
+    confirmPassword: string,
+    newUser: boolean
   },
   journalEntry: JournalEntry | null
 }
@@ -62,10 +64,28 @@ export interface LoginUserError extends Action {
   type: 'loginUserError';
 }
 
+export interface SignUpUserRequest extends Action {
+  type: 'signUpUserRequest';
+}
+
+export interface SignUpUserSuccess extends Action {
+  type: 'signUpUserSuccess';
+  journalEntry: JournalEntry;
+}
+
+export interface SignUpUserError extends Action {
+  type: 'signUpUserError';
+}
+
 export interface UpdateForm extends Action {
   type: 'updateForm';
   email: string;
   password: string;
+  confirmPassword: string;
+}
+
+export interface ToggleSignUp extends Action {
+  type: 'toggleSignUp';
 }
 
 export type Effect = ThunkAction<any, ApplicationState, any, ApplicationAction>;
@@ -77,4 +97,8 @@ export type ApplicationAction =
   | LoginUserRequest
   | LoginUserSuccess
   | LoginUserError
-  | UpdateForm;
+  | UpdateForm
+  | SignUpUserRequest
+  | SignUpUserSuccess
+  | SignUpUserError
+  | ToggleSignUp;

@@ -31,7 +31,13 @@ public class APIController {
     @ResponseBody
     public JournalEntry signIn(@RequestBody LoginForm loginForm) {
         User user = userService.loginUser(loginForm.getEmail(), loginForm.getPassword());
-        return userService.getJournalEntryByUserAndDate(user, sdf.format(new Date()));
+        return userService.getOrCreateJournalEntryForUserAndDate(user, sdf.format(new Date()));
     }
 
+    @PostMapping(value = "/signup")
+    @ResponseBody
+    public JournalEntry signUp(@RequestBody LoginForm loginForm) {
+        User user = userService.signUpUser(loginForm.getEmail(), loginForm.getPassword());
+        return userService.createJournalEntryForUserAndDate(user, sdf.format(new Date()));
+    }
 }

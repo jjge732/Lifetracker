@@ -3,7 +3,6 @@ package com.jjgeastwood.lifetracker.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +14,15 @@ import static javax.persistence.CascadeType.REMOVE;
 @Table(name="journal_entries")
 public class JournalEntry {
 
-    private @Id @Column(name="entry_date")
+    @Id @GeneratedValue
+    private long id;
+
+    @Column(name="entry_date")
     String entryDate;
 
     @OneToMany(cascade=REMOVE, mappedBy = "journalEntry")
     private List<Meal> meals;
+
     private Date createdAt;
     private Date updatedAt;
 
@@ -45,14 +48,22 @@ public class JournalEntry {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        JournalEntry JournalEntry = (JournalEntry) o;
-        return Objects.equals(entryDate, JournalEntry.entryDate) &&
-                Objects.equals(meals, JournalEntry.meals);
+        JournalEntry journalEntry = (JournalEntry) o;
+        return Objects.equals(entryDate, journalEntry.entryDate) &&
+                Objects.equals(meals, journalEntry.meals);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(entryDate, meals);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getEntryDate() {

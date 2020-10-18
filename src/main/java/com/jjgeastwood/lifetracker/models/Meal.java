@@ -29,7 +29,7 @@ public class Meal {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="entry_date")
+    @JoinColumn(name="journal_entry")
     private JournalEntry journalEntry;
 
     private @Version

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { ApplicationState, Meal as MealType } from '../store/types'
 
@@ -12,20 +12,21 @@ export const Meal: React.FC<Props> = props => {
   const dispatch = useDispatch();
 
   const handleClick = (event: any) => {
-
+    alert('Display Food Model')
   }
 
   return (
-    <>
+    <div className='mealContainer'>
       <div className='mealHeader'>{props.meal.name}</div>
-        {
-          props.meal.foods.map(food => <>
-            <span className='foodHeader'>{food.name}</span>
-            <span className='macro'>Protein: {food.protein}</span>
-            <span className='macro'>Carbs: {food.carbs}</span>
-            <span className='macro'>Fats: {food.fats}</span>
-          </>)
-        }
-    </>
+      {
+        props.meal.foods.map(food => <>
+          <span key={food.name} className='foodHeader'>{food.name}</span>
+          <span key={food.name} className='macro'>Protein: {food.protein}</span>
+          <span key={food.name} className='macro'>Carbs: {food.carbs}</span>
+          <span key={food.name} className='macro'>Fats: {food.fats}</span>
+        </>)
+      }
+      <button onClick={handleClick}>Add Food</button>
+    </div>
   );
 }

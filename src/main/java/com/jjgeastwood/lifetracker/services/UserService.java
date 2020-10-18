@@ -9,10 +9,6 @@ import com.jjgeastwood.lifetracker.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 @Service
 public class UserService {
 
@@ -38,7 +34,21 @@ public class UserService {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
-    public JournalEntry getJournalEntryByUserAndDate(User user, String entryDate) {
-        return journalEntryRepository.findByUserAndEntryDate(user, entryDate);
+    public User signUpUser(String email, String password) {
+        User user = new User(email, password);
+        return userRepository.save(user);
+    }
+
+    public JournalEntry createJournalEntryForUserAndDate(User user, String entryDate) {
+        return journalEntryRepository.save(new JournalEntry(user, entryDate));
+    }
+
+    public JournalEntry getOrCreateJournalEntryForUserAndDate(User user, String entryDate) {
+        JournalEntry journalEntry = journalEntryRepository.findByUserAndEntryDate(user, entryDate);
+        if (journalEntry != null) {
+            return journalEntry;
+        } else {
+            return createJournalEntryForUserAndDate(user, entryDate);
+        }
     }
 }

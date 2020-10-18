@@ -10,7 +10,9 @@ export const initialState: ApplicationState = {
   }],
   form: {
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: "",
+    newUser: false
   },
   journalEntry: null
 }
@@ -34,7 +36,12 @@ const reducer = (state = initialState, action: ApplicationAction) => {
       return produce(state, draft => {
         draft.form.email = action.email;
         draft.form.password = action.password;
-      })
+        draft.form.confirmPassword = action.confirmPassword;
+      });
+    case "toggleSignUp":
+      return produce(state, draft => {
+        draft.form.newUser = !state.form.newUser;
+      });
     case "loginUserRequest":
       return produce(state, draft => {
         draft.loading.users = true;
@@ -45,6 +52,19 @@ const reducer = (state = initialState, action: ApplicationAction) => {
         draft.journalEntry = action.journalEntry;
       });
     case "loginUserError":
+      return produce(state, draft => {
+        draft.loading.users = false;
+      });
+    case "signUpUserRequest":
+      return produce(state, draft => {
+        draft.loading.users = true;
+      });
+    case "signUpUserSuccess":
+      return produce(state, draft => {
+        draft.loading.users = false;
+        draft.journalEntry = action.journalEntry;
+      });
+    case "signUpUserError":
       return produce(state, draft => {
         draft.loading.users = false;
       });
