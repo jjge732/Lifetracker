@@ -38,10 +38,11 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         User user = new User("test@gmail.com", "password");
+        this.userRepository.save(user);
         JournalEntry journalEntry = new JournalEntry(user, sdf.format(new Date()));
         Meal meal = new Meal(journalEntry, "Breakfast");
         Food food = new Food(meal,"Yogurt",5,5,5);
-        this.userRepository.save(user);
+        this.userRepository.save(journalEntry.getUser());
         this.journalEntryRepository.save(journalEntry);
         this.mealRepository.save(meal);
         this.foodRepository.save(food);

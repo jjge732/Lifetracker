@@ -3,6 +3,7 @@ package com.jjgeastwood.lifetracker.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,16 +12,16 @@ import java.util.Objects;
 import static javax.persistence.CascadeType.REMOVE;
 
 @Entity
+//@Access(AccessType.PROPERTY)
 @Table(name="journal_entries")
-public class JournalEntry {
+//@IdClass(JournalEntryId.class)
+public class JournalEntry implements Serializable {
 
-    @Id @GeneratedValue
-    private long id;
+    @EmbeddedId
+    @Column(name="journal_entry_id")
+    JournalEntryId journalEntryId;
 
-    @Column(name="entry_date")
-    String entryDate;
-
-    @OneToMany(cascade=REMOVE, mappedBy = "journalEntry")
+    @OneToMany(cascade=REMOVE, mappedBy = "journalEntryId")
     private List<Meal> meals;
 
     private Date createdAt;
@@ -28,7 +29,7 @@ public class JournalEntry {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id", insertable = false, updatable = false)
     private User user;
 
     private @Version
@@ -40,7 +41,7 @@ public class JournalEntry {
     public JournalEntry(User user, String entryDate) {
         this.user = user;
         this.meals = new ArrayList<>();
-        this.entryDate = entryDate;
+        this.journalEntryId = new JournalEntryId(user, entryDate);
         this.createdAt = this.updatedAt = new Date();
     }
 
@@ -49,29 +50,22 @@ public class JournalEntry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JournalEntry journalEntry = (JournalEntry) o;
-        return Objects.equals(entryDate, journalEntry.entryDate) &&
+        return Objects.equals(journalEntryId, journalEntry.journalEntryId) &&
                 Objects.equals(meals, journalEntry.meals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(entryDate, meals);
+        return Objects.hash(journalEntryId, meals);
     }
 
-    public long getId() {
-        return id;
+//    @Id
+    public JournalEntryId getJournalEntryId() {
+        return journalEntryId;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(String entryDate) {
-        this.entryDate = entryDate;
+    public void setJournalEntryId(JournalEntryId journalEntryId) {
+        this.journalEntryId = journalEntryId;
     }
 
     public Date getCreatedAt() {
@@ -98,12 +92,20 @@ public class JournalEntry {
         this.meals = meals;
     }
 
+    public void addMeal(Meal meal) {
+        this.meals.add(meal);
+    }
+
+//    @Id
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        if (this.user == null) {
+            this.user = user;
+        }
+        this.user.addJournalEntry(this);
     }
 
     public Date getVersion() {
@@ -117,7 +119,6 @@ public class JournalEntry {
     @Override
     public String toString() {
         return "JournalEntry{" +
-                "entryDate=" + entryDate +
                 ", meals='" + meals + '\'' +
                 ", created_on='" + createdAt + '\'' +
                 ", last_updated='" + updatedAt + '\'' +

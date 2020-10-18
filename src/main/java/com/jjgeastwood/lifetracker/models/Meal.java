@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static javax.persistence.CascadeType.REMOVE;
-
 @Entity
 @Table(name="meals")
 public class Meal {
@@ -28,9 +26,12 @@ public class Meal {
     private Date updatedAt;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="journal_entry")
-    private JournalEntry journalEntry;
+    @MapsId("journal_entry_id")
+    @JoinColumns({
+        @JoinColumn(name="entry_date"),
+        @JoinColumn(name="user")}
+    )
+    private JournalEntryId journalEntryId;
 
     private @Version
     @JsonIgnore
@@ -41,7 +42,7 @@ public class Meal {
     public Meal(JournalEntry journalEntry, String name) {
         this.name = name;
         this.foods = new ArrayList<>();
-        this.journalEntry = journalEntry;
+        this.journalEntryId = journalEntry.getJournalEntryId();
         this.createdAt = this.updatedAt = new Date();
     }
 

@@ -5,9 +5,12 @@ import com.jjgeastwood.lifetracker.dao.JournalEntryRepository;
 import com.jjgeastwood.lifetracker.dao.MealRepository;
 import com.jjgeastwood.lifetracker.dao.UserRepository;
 import com.jjgeastwood.lifetracker.models.JournalEntry;
+import com.jjgeastwood.lifetracker.models.JournalEntryId;
 import com.jjgeastwood.lifetracker.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -44,11 +47,7 @@ public class UserService {
     }
 
     public JournalEntry getOrCreateJournalEntryForUserAndDate(User user, String entryDate) {
-        JournalEntry journalEntry = journalEntryRepository.findByUserAndEntryDate(user, entryDate);
-        if (journalEntry != null) {
-            return journalEntry;
-        } else {
-            return createJournalEntryForUserAndDate(user, entryDate);
-        }
+        Optional<JournalEntry> journalEntry = journalEntryRepository.findById(new JournalEntryId(user, entryDate));
+        return journalEntry.orElseGet(() -> createJournalEntryForUserAndDate(user, entryDate));
     }
 }

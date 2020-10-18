@@ -15,6 +15,7 @@ import static javax.persistence.FetchType.EAGER;
 public class User {
 
     private @Id @GeneratedValue Long id;
+    @Column(unique = true)
     private String email;
     private String password;
 
@@ -76,6 +77,10 @@ public class User {
 
     public Set<JournalEntry> getJournalEntries() {
         return journalEntries;
+    }
+
+    public void addJournalEntry(JournalEntry journalEntry) {
+        this.journalEntries.add(journalEntry);
     }
 
     public Long getVersion() {
