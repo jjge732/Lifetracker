@@ -9,7 +9,7 @@ module.exports = env => {
     target: "web",
     mode: "development",
     output: {
-      path: path.resolve(__dirname, "build"),
+      path: path.resolve(__dirname, "..", "resources", "static"),
       filename: "bundle.js",
     },
     resolve: {
