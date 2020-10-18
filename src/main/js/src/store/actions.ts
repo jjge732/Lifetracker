@@ -32,6 +32,7 @@ export const updateForm = (email: string, password: string, confirmPassword: str
   password,
   confirmPassword
 });
+
 export const signUpUserRequest = (): SignUpUserRequest => ({
   type: 'signUpUserRequest',
 });

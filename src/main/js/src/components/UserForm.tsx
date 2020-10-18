@@ -35,6 +35,7 @@ export const UserForm = () => {
   const signUp = () => {
     if (password !== confirmPassword) {
       alert('Passwords must match');
+      
     } else {
       dispatch(signUpUser(email, password))
     }
@@ -56,7 +57,7 @@ export const UserForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        
+
         <label><b>Email</b></label>
         <input type="text" value={email} onChange={handleChange} name="email" required />
 

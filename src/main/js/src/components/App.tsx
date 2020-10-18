@@ -11,12 +11,12 @@ export const App: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleClick = (event: any) => {
-    alert('display new meal form')
+    alert('Display new meal form')
   }
 
   return journalEntry === null ? <UserForm /> : (
     <main className="App">
-      <div>{journalEntry.entryDate}</div>
+      <div>{journalEntry.journalEntryId.entryDate}</div>
       {
         journalEntry.meals.map((meal: MealType) => <Meal key={meal.name} meal={meal}/>)
       }

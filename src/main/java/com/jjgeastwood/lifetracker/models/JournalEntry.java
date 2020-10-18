@@ -12,9 +12,7 @@ import java.util.Objects;
 import static javax.persistence.CascadeType.REMOVE;
 
 @Entity
-//@Access(AccessType.PROPERTY)
 @Table(name="journal_entries")
-//@IdClass(JournalEntryId.class)
 public class JournalEntry implements Serializable {
 
     @EmbeddedId
@@ -59,7 +57,6 @@ public class JournalEntry implements Serializable {
         return Objects.hash(journalEntryId, meals);
     }
 
-//    @Id
     public JournalEntryId getJournalEntryId() {
         return journalEntryId;
     }
@@ -96,7 +93,6 @@ public class JournalEntry implements Serializable {
         this.meals.add(meal);
     }
 
-//    @Id
     public User getUser() {
         return user;
     }

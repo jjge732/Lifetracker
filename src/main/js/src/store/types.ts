@@ -6,7 +6,10 @@ export interface User {
 }
 
 export interface JournalEntry {
-  entryDate: string
+  journalEntryId: {
+    entryDate: string,
+    userId: string
+  }
   meals: Array<Meal>;
 }
 

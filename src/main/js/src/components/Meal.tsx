@@ -21,9 +21,9 @@ export const Meal: React.FC<Props> = props => {
       {
         props.meal.foods.map(food => <>
           <span key={food.name} className='foodHeader'>{food.name}</span>
-          <span key={food.name} className='macro'>Protein: {food.protein}</span>
-          <span key={food.name} className='macro'>Carbs: {food.carbs}</span>
-          <span key={food.name} className='macro'>Fats: {food.fats}</span>
+          <span key={`${food.name}-protein`} className='macro'>Protein: {food.protein}</span>
+          <span key={`${food.name}-carbs`} className='macro'>Carbs: {food.carbs}</span>
+          <span key={`${food.name}-fats`} className='macro'>Fats: {food.fats}</span>
         </>)
       }
       <button onClick={handleClick}>Add Food</button>
